@@ -2,6 +2,7 @@
 
 namespace CleanArchitecture.Application.Exceptions
 {
+	//! Se disparará cuando haya uno o más errores en las validaciones definidas (CreateStreamerCommandValidator, etc.)
 	public class ValidationException : ApplicationException
 	{
         public ValidationException() : base("Se presentaron uno o más errores de validación")
@@ -21,6 +22,6 @@ namespace CleanArchitecture.Application.Exceptions
                 );
 		}
 
-        public IDictionary<string, string[]> Errors { get; set; }
+        public IDictionary<string, string[]> Errors { get; }
     }
 }

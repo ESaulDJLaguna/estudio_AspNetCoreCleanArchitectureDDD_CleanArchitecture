@@ -35,7 +35,7 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.UpdateStream
 			//! [1] LOS DATOS ENVIADOS POR EL CLIENTE (request) SE COPIAN A streamerToUpdate
 			_mapper.Map(request, streamerToUpdate, typeof(UpdateStreamerCommand), typeof(Streamer));
 
-			await _streamerRepository.UpdateAync(streamerToUpdate);
+			await _streamerRepository.UpdateAsync(streamerToUpdate);
 
 			_logger.LogInformation($"La operación fue exitosa actualizando el streamer {request.Id}");
 

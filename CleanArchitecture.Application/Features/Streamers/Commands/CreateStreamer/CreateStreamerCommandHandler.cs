@@ -31,7 +31,7 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.CreateStream
         public async Task<int> Handle(CreateStreamerCommand request, CancellationToken cancellationToken)
         {
             var streamerEntity = _mapper.Map<Streamer>(request);
-            var newStreamer = await _streamerRepository.AddAync(streamerEntity);
+            var newStreamer = await _streamerRepository.AddAsync(streamerEntity);
 
             _logger.LogInformation($"Streamer {newStreamer.Id} fue creado exitosamente");
 
@@ -46,8 +46,8 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.CreateStream
             {
                 //TODO: AGREGAR CORREO ELECTRÓNICO
                 To = "",
-                Body = "La compañía de streamer se creó correctamente",
-                Subject = "Mensaje de alerta"
+                Body = "<p style='color: red;'>La compañía de streamer se creó correctamente</p>",
+                Subject = "Mensaje de prueba CleanArchitecture"
             };
 
             try

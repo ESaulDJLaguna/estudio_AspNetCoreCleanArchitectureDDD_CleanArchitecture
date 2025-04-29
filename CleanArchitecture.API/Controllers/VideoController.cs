@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Features.Videos.Queries.GetVideosList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -18,6 +19,7 @@ namespace CleanArchitecture.API.Controllers
 
 		//! [1] TIPO DE OPERACIÓN, NOMBRE DEL endpoint Y PARÁMETRO QUE SE ENVÍA DESDE EL CLIENTE
 		[HttpGet("{username}", Name = "GetVideo")]
+		[Authorize]
 		//! [1] TIPO DE DATO A DEVOLVER POR ESTE endpoint Y UN STATUS EN CASO DE QUE SEA CORRECTA
 		[ProducesResponseType(typeof(IEnumerable<VideosVm>), (int)HttpStatusCode.OK)]
 		public async Task<ActionResult<IEnumerable<VideosVm>>> GetVideosByUsername(string username)

@@ -10,27 +10,34 @@ namespace CleanArchitecture.Application.Contracts.Persistence
 	{
 		//![1] DEVUELVE LOS REGISTROS DE UNA ENTIDAD DETERMINADA
 		Task<IReadOnlyList<T>> GetAllAsync();
+
 		//![1] DEVUELVE UNA COLECCIÓN DE DATOS DE ACUERDO A UNA CONDICIÓN LÓGICA QUE SE PASA COMO PARÁMETRO.
 		Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
+
 		//![2] PERMITIRÁ INCLUIR EN LOS PARÁMETROS EL ORDENAMIENTO CON EL QUE SE DEVOLVERÁ EL RESULTADO
 		Task<IReadOnlyList<T>> GetAsync(
 			Expression<Func<T, bool>> predicated = null,
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
 			string includeString = null,
 			bool disableTracking = true);
+
 		//![2] SE UTILIZARÁ PARA IMPLEMENTAR UNA PAGINACIÓN
 		Task<IReadOnlyList<T>> GetAsync(
 			Expression<Func<T, bool>> predicated = null,
 			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
 			List<Expression<Func<T, object>>> includes = null,
 			bool disableTracking = true);
+
 		//![2] DEVOLVERÁ EL OBJETO QUE PERTENECE AL id INDICADO
 		Task<T> GetByIdAsync(int id);
+
 		//![2] AGREGA UN NUEVO REGISTRO DE CUALQUIER ENTIDAD
-		Task<T> AddAync(T entity);
+		Task<T> AddAsync(T entity);
+
 		//![2] ACTUALIZA UN REGISTRO
-		Task<T> UpdateAync(T entity);
+		Task<T> UpdateAsync(T entity);
+
 		//![2] ELIMINA UN REGISTRO ESPECÍFICO
-		Task<T> DeleteAync(T entity);
+		Task DeleteAsync(T entity);
 	}
 }
