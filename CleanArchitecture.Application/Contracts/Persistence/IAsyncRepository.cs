@@ -39,5 +39,11 @@ namespace CleanArchitecture.Application.Contracts.Persistence
 
 		//![2] ELIMINA UN REGISTRO ESPECÍFICO
 		Task DeleteAsync(T entity);
+
+		void AddEntity(T entity);
+
+		void UpdateEntity(T entity);
+
+		void DeleteEntity(T entity);
 	}
 }

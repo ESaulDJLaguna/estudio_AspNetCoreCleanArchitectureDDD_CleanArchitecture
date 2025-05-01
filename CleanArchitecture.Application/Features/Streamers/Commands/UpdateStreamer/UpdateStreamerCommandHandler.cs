@@ -11,20 +11,23 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.UpdateStream
 {
 	internal class UpdateStreamerCommandHandler : IRequestHandler<UpdateStreamerCommand>
 	{
-		private readonly IStreamerRepository _streamerRepository;
+		//private readonly IStreamerRepository _streamerRepository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 		private readonly ILogger<UpdateStreamerCommandHandler> _logger;
 
-		public UpdateStreamerCommandHandler(IStreamerRepository streamerRepository, IMapper mapper, ILogger<UpdateStreamerCommandHandler> logger)
+		public UpdateStreamerCommandHandler(IStreamerRepository streamerRepository, IMapper mapper, ILogger<UpdateStreamerCommandHandler> logger, IUnitOfWork unitOfWork)
 		{
-			_streamerRepository = streamerRepository;
+			//_streamerRepository = streamerRepository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 			_logger = logger;
 		}
 
 		public async Task<Unit> Handle(UpdateStreamerCommand request, CancellationToken cancellationToken)
 		{
-			var streamerToUpdate = await _streamerRepository.GetByIdAsync(request.Id);
+			//var streamerToUpdate = await _streamerRepository.GetByIdAsync(request.Id);
+			var streamerToUpdate = await _unitOfWork.StreamerRepository.GetByIdAsync(request.Id);
 
 			if (streamerToUpdate is null)
 			{
@@ -35,7 +38,9 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.UpdateStream
 			//! [1] LOS DATOS ENVIADOS POR EL CLIENTE (request) SE COPIAN A streamerToUpdate
 			_mapper.Map(request, streamerToUpdate, typeof(UpdateStreamerCommand), typeof(Streamer));
 
-			await _streamerRepository.UpdateAsync(streamerToUpdate);
+			//await _streamerRepository.UpdateAsync(streamerToUpdate);
+			_unitOfWork.StreamerRepository.UpdateEntity(streamerToUpdate);
+			await _unitOfWork.Complete();
 
 			_logger.LogInformation($"La operación fue exitosa actualizando el streamer {request.Id}");
 

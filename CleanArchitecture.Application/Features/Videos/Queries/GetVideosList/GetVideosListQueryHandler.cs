@@ -10,12 +10,14 @@ namespace CleanArchitecture.Application.Features.Videos.Queries.GetVideosList
 	public class GetVideosListQueryHandler : IRequestHandler<GetVideosListQuery, List<VideosVm>>
 	{
 		//![1] INTERFAZ DONDE SE DEFINIÓ LA OPERACIÓN A UTILIZAR
-		private readonly IVideoRepository _videoRepository;
+		//private readonly IVideoRepository _videoRepository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 
-		public GetVideosListQueryHandler(IVideoRepository videoRepository, IMapper mapper)
+		public GetVideosListQueryHandler(IVideoRepository videoRepository, IMapper mapper, IUnitOfWork unitOfWork)
 		{
-			_videoRepository = videoRepository;
+			//_videoRepository = videoRepository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 		}
 
@@ -23,7 +25,8 @@ namespace CleanArchitecture.Application.Features.Videos.Queries.GetVideosList
 		//! GetVideosListQuery REPRESENTA LOS PARÁMETROS DISPONIBLES
 		public async Task<List<VideosVm>> Handle(GetVideosListQuery request, CancellationToken cancellationToken)
 		{
-			var videoList = await _videoRepository.GetVideoByUsername(request._Username);
+			//var videoList = await _videoRepository.GetVideoByUsername(request._Username);
+			var videoList = await _unitOfWork.VideoRepository.GetVideoByUsername(request._Username);
 
 			return _mapper.Map<List<VideosVm>>(videoList);
 		}
