@@ -7,6 +7,7 @@ using CleanArchitecture.Application.Models;
 using CleanArchitecture.Domain;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace CleanArchitecture.Application.Features.Streamers.Commands.CreateStreamer
 {
@@ -19,14 +20,16 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.CreateStream
         private readonly IEmailService _emailService;
         //! [1] DEBEMOS INDICAR SOBRE QUÉ CLASE VA A TRABAJAR
         private readonly ILogger<CreateStreamerCommandHandler> _logger;
+        private EmailSettings _emailSettings { get; }
 
-        public CreateStreamerCommandHandler(IStreamerRepository streamerRepository, IMapper mapper, IEmailService emailService, ILogger<CreateStreamerCommandHandler> logger, IUnitOfWork unitOfWork)
+        public CreateStreamerCommandHandler(IStreamerRepository streamerRepository, IMapper mapper, IEmailService emailService, ILogger<CreateStreamerCommandHandler> logger, IUnitOfWork unitOfWork, IOptions<EmailSettings> emailSettings)
         {
             //_streamerRepository = streamerRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _emailService = emailService;
             _logger = logger;
+            _emailSettings = emailSettings.Value;
         }
 
         //! [1] IMPLEMENTACIÓN DE LA INTERFAZ
@@ -58,7 +61,7 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands.CreateStream
             var email = new Email
             {
                 //TODO: AGREGAR CORREO ELECTRÓNICO
-                To = "",
+                To = _emailSettings.ToAddress,
                 Body = "<p style='color: red;'>La compañía de streamer se creó correctamente</p>",
                 Subject = "Mensaje de prueba CleanArchitecture"
             };

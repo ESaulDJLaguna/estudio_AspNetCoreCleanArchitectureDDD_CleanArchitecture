@@ -25,8 +25,8 @@ namespace CleanArchitecture.Infrastructure.Persistence
 			// Primero se va a ejecutar el método SaveChangesAsync() dentro de StreamerDbContext, por lo que se establecerá en primer lugar el CreatedBy = "system", pero a continuación se llenará la data de prueba y se "sobreescribirá" el CreatedBy
 			return new List<Streamer>()
 			{
-				new Streamer { CreatedBy = "User", Nombre = "Maxi HBP", Url = "http://hbp.com" },
-				new Streamer { CreatedBy = "User", Nombre = "Amazon VIP", Url = "http://amazonvip.com" }
+				new Streamer { CreatedBy = "ESaulDJLaguna", Nombre = "Maxi HBP", Url = "http://hbp.com" },
+				new Streamer { CreatedBy = "ESaulDJLaguna", Nombre = "Amazon VIP", Url = "http://amazonvip.com" }
 			};
 		}
 	}
